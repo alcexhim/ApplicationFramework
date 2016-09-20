@@ -236,4 +236,9 @@ _Pvt_Extensions
 .fake/
 
 # Eclipse crap
+.buildpath
 .classpath
+.metadata
+.project
+.settings
+RemoteSystemsTempFiles
