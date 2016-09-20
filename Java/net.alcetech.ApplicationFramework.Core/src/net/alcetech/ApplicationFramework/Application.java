@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Hashtable;
 
 public class Application {
+	
 	private static String[] _args = new String[0];
 	public static void initialize(String[] args) {
 		Application._args = args;
@@ -76,6 +77,11 @@ public class Application {
 	}
 	public static void stop(int exitCode) {
 		System.exit(exitCode);
+	}
+	
+	private static ArrayList<CommandListener> _commandListeners = new ArrayList<CommandListener>();
+	public static void addCommandListener(CommandListener item) {
+		_commandListeners.add(item);
 	}
 
 }

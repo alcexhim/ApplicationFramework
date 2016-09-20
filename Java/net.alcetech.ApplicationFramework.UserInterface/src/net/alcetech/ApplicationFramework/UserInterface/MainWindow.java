@@ -52,6 +52,8 @@ public class MainWindow extends JFrame implements ActionListener, WindowListener
 					menuItem = new JMenu();
 					for (int i = 0; i < childItems.length; i++) {
 						JComponent childItemComponent = initializeMenuItemForCommandItem(childItems[i]);
+						if (childItemComponent == null) continue;
+						
 						menuItem.add(childItemComponent);
 					}
 				}
@@ -65,6 +67,10 @@ public class MainWindow extends JFrame implements ActionListener, WindowListener
 				menuItem.setDisplayedMnemonicIndex(mnemonicIndex);
 				commandsForJMenuItem.put(menuItem, cmd);
 				return menuItem;
+			}
+			else
+			{
+				System.out.println("appfx-ui: fatal: command `" + commandID + "` not found");
 			}
 		}
 		else if (item.getClass() == SeparatorCommandItem.class) {

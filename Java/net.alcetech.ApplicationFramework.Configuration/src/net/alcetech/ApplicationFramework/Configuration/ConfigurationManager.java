@@ -5,8 +5,8 @@ import java.io.FileNotFoundException;
 import net.alcetech.ApplicationFramework.Application;
 import net.alcetech.ApplicationFramework.IO.Directory;
 import net.alcetech.ApplicationFramework.IO.File;
-import net.alcetech.UniversalEditor.Document;
-import net.alcetech.UniversalEditor.Accessors.FileAccessor;
+import net.alcetech.UniversalEditor.Core.*;
+import net.alcetech.UniversalEditor.Core.Accessors.FileAccessor;
 
 import net.alcetech.UniversalEditor.DataFormats.Markup.XML.*;
 import net.alcetech.UniversalEditor.ObjectModels.Markup.*;
