@@ -19,6 +19,11 @@ public class ConfigurationManager {
 	
 	public static void initialize() {
 		
+		if (Application.getShortName() == null) {
+			System.err.println("appfx: please call Application.setShortName() before initializing configuration");
+			return;
+		}
+		
 		String basePath = "/usr/share/" + Application.getShortName();
 		Directory directory = new Directory(basePath);
 		

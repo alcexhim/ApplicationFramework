@@ -14,7 +14,7 @@ public class Application {
 	public static String getTitle() { return _Title; }
 	public static void setTitle(String value) { _Title = value; }
 	
-	private static String _ShortName = "";
+	private static String _ShortName = null;
 	public static String getShortName() { return _ShortName; }
 	public static void setShortName(String value) { _ShortName = value; }
 
