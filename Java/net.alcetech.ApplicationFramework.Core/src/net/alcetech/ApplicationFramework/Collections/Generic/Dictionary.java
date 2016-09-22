@@ -53,4 +53,8 @@ public class Dictionary<T1, T2> {
 	public boolean containsValue(T2 value) {
 		return _values.contains(value);
 	}
+
+	public T2 getByIndex(int index) {
+		return _values.get(index);
+	}
 }

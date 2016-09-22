@@ -1,6 +1,7 @@
 package net.alcetech.ApplicationFramework.Configuration;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 
 import net.alcetech.ApplicationFramework.Application;
 import net.alcetech.ApplicationFramework.IO.Directory;
@@ -43,7 +44,12 @@ public class ConfigurationManager {
 			}
 			
 			// System.out.println("appfx: loading configuration file '" + files[i].getFullPath() + "'");
-			Document.load(mom, xdf, fa);
+			try {
+				Document.load(mom, xdf, fa);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		
 		
