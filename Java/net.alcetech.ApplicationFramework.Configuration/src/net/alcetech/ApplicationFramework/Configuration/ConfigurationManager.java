@@ -4,6 +4,9 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import net.alcetech.ApplicationFramework.Application;
+import net.alcetech.ApplicationFramework.Command;
+import net.alcetech.ApplicationFramework.CommandItem;
+import net.alcetech.ApplicationFramework.CommandItems.*;
 import net.alcetech.ApplicationFramework.IO.Directory;
 import net.alcetech.ApplicationFramework.IO.File;
 import net.alcetech.UniversalEditor.Core.*;
@@ -52,7 +55,70 @@ public class ConfigurationManager {
 			}
 		}
 		
+		MarkupElement[] elements = mom.getElements();
+		for (int i = 0; i < elements.length; i++) {
+			if (elements[i].getName().equals("ApplicationFramework")) {
+				
+				if (elements[i].getClass().isAssignableFrom(MarkupTagElement.class)) {
+					MarkupTagElement tagMainMenu = ((MarkupTagElement)elements[i]).getTagByTagName("MainMenu");
+					if (tagMainMenu != null) {
+					
+						MarkupTagElement tagItems = tagMainMenu.getTagByTagName("Items");
+						if (tagItems != null) {
+						
+							MarkupTagElement[] tags = tagItems.getTags();
+							for (int j = 0; j < tags.length; j++) {
+								CommandItem ci = LoadCommandItemFromTag(tags[j]);
+								if (ci != null) {
+									Application.addMainMenuCommandItem(ci);
+								}
+							}
+						
+						}
+					
+					}
+					
+
+					MarkupTagElement tagCommands = ((MarkupTagElement)elements[i]).getTagByTagName("Commands");
+					if (tagCommands != null) {
+						MarkupTagElement[] tags = tagCommands.getTags();
+						System.out.println("found " + tags.length + " Commands tags");
+						for (int j = 0; j < tags.length; j++) {
+							if (tags[j].getName().equals("Command")) {
+								MarkupAttribute attCommandID = tags[j].getAttribute("ID");
+								if (attCommandID == null) continue;
+								
+								Command cmd = new Command(attCommandID.getValue());
+								
+								MarkupTagElement[] tagItems = tags[j].getTags();
+								for (int k = 0; k < tagItems.length; k++) {
+									CommandItem ci = LoadCommandItemFromTag(tagItems[k]);
+									if (ci == null) continue;
+									cmd.addItem(ci);
+								}
+								
+								Application.addCommand(cmd);
+							}
+						}
+					}
+				}
+				
+			}
+		}
 		
+	}
+	private static CommandItem LoadCommandItemFromTag(MarkupTagElement tag) {
+
+		if (tag.getName().equals("CommandReference")) {
+			MarkupAttribute attCommandID = tag.getAttribute("CommandID");
+			if (attCommandID == null) return null;
+			
+			return new CommandReferenceCommandItem(attCommandID.getValue());
+		}
+		else if (tag.getName().equals("Separator")) {
+			return new SeparatorCommandItem();
+		}
+		return null;
 	}
 
 }

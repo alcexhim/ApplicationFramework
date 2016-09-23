@@ -35,7 +35,8 @@ public class MainWindow extends JFrame implements ActionListener, WindowListener
 			
 			Command cmd = Application.getCommand(commandID);
 			if (cmd != null) {
-				
+
+				System.out.println("appfx-ui: info: found command `" + commandID + "`");
 				CommandItem[] childItems = cmd.getItems();
 
 				String title = cmd.getTitle();
@@ -63,14 +64,16 @@ public class MainWindow extends JFrame implements ActionListener, WindowListener
 				
 				menuItem.addActionListener(this);
 				menuItem.setText(title);
-				menuItem.setMnemonic(title.charAt(mnemonicIndex));
-				menuItem.setDisplayedMnemonicIndex(mnemonicIndex);
+				if (mnemonicIndex > -1) {
+					menuItem.setMnemonic(title.charAt(mnemonicIndex));
+					menuItem.setDisplayedMnemonicIndex(mnemonicIndex);
+				}
 				commandsForJMenuItem.put(menuItem, cmd);
 				return menuItem;
 			}
 			else
 			{
-				System.out.println("appfx-ui: fatal: command `" + commandID + "` not found");
+				System.err.println("appfx-ui: fatal: command `" + commandID + "` not found");
 			}
 		}
 		else if (item.getClass() == SeparatorCommandItem.class) {
@@ -86,7 +89,7 @@ public class MainWindow extends JFrame implements ActionListener, WindowListener
 		JMenuBar menuBar = new JMenuBar();
 		this.setJMenuBar(menuBar);
 		
-		CommandItem[] mainMenuCommandItems = GuiApplication.getMainMenuCommandItems();
+		CommandItem[] mainMenuCommandItems = Application.getMainMenuCommandItems();
 		for (int i = 0; i < mainMenuCommandItems.length; i++) {
 			JComponent menuItem = initializeMenuItemForCommandItem(mainMenuCommandItems[i]);
 			if (menuItem != null) menuBar.add(menuItem);
